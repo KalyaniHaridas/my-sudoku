@@ -7,7 +7,7 @@ import React from 'react';
 export default function Footer() {
     return(
         <footer className="footer">
-            <p>&#169; 2023 - source code on <a href="https://github.com/">Github</a></p>
+            <p>&#169; 2023 - source code on <a href="https://github.com/KalyaniHaridas/my-sudoku">Github</a></p>
         </footer>
     )
 }
