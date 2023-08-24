@@ -22,9 +22,9 @@ function Tools({
             <button className="button-clear" onClick={clearBoard}>
             Clear
             </button>
-            <button className="button-hint" onClick={getHint}>
+            {/* <button className="button-hint" onClick={getHint}>
             Hint
-            </button>
+            </button> */}
             <button className="button-solution" onClick={endGame}>
             Show Solution
             </button>
