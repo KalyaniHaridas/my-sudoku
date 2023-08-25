@@ -7,7 +7,8 @@ import { useState, useEffect, useMemo, useRef } from "react";
 import React from "react";
 import Confetti from "react-confetti";
 import Footer from "./Footer"
-//import moment from 'moment';
+// import Timer from './Timer';
+
 
 //initialBoard doesn't need to be state bc it doesn't cause a rerender. It needs to udpate on a new game...
 //however it appears some other variables depend on it
@@ -20,7 +21,33 @@ function App() {
   const [mode, setMode] = useState("Easy"); //for toggling between coloring correct answers and not
   const [difficulty, setDifficulty] = useState(40); //user can select how many starting cells
   const [notesSetting, setNotesSetting] = useState(false); //toggle between inputting notes and not
-  //const [timeGameStarted, setTimeGameStarted ] = useState<moment.Moment>(moment());
+  const [seconds, setSeconds] = useState(0);
+  const [minutes, setMinutes] = useState(0);
+  const [isFrozen, setIsFrozen] = useState(false);
+
+  const resetTimer = () => {
+    setSeconds(0);
+    setMinutes(0);
+    setIsFrozen(false);
+  };
+
+  useEffect(() => {
+    let interval;
+    if(gameOn) {
+    if (!isFrozen) {
+      interval = setInterval(() => {
+        if (seconds === 59) {
+          setMinutes(minutes => minutes + 1);
+          setSeconds(0);
+        } else {
+          setSeconds(seconds => seconds + 1);
+        }
+      }, 1000);
+    }
+  }
+    return () => clearInterval(interval);
+  }, [seconds,isFrozen,gameOn]);
+
 
 
   //array containing the state of the board before each change
@@ -54,6 +81,7 @@ function App() {
 
   //event handler when create new board button is pressed
   function startGame() {
+    resetTimer();
     //reset everything to default values
     setGameOn(true);
     setWin(false);
@@ -194,6 +222,7 @@ function App() {
 
   function endGame() {
     setGameOn(false);
+    setIsFrozen(true);
 
     //to not allow further changes - setBoard to the solutionBoard by converting it to objects (everything fixed)
     let solutionBoardDisplay = solutionBoard.map((row) =>
@@ -236,6 +265,7 @@ function App() {
       }
     }
   }
+  // console.log(emptyNodePositionList[0]);
 
   // Selecting Random element from the empty nodes list
   const randomIndex = Math.floor(Math.random() * emptyNodePositionList.length);
@@ -254,6 +284,7 @@ function App() {
 
   //event handler for clear button. Resets the undo history and resets board
   function clearBoard() {
+    resetTimer();
     undoMoves.current = [];
     setBoard(initialBoard);
   }
@@ -277,6 +308,8 @@ function App() {
         difficulty={difficulty}
         handleSliderChange={handleSliderChange}
         startGame={startGame}
+        minutes={minutes}
+        seconds={seconds}
         mode={mode}
         toggleMode={toggleMode}
       />

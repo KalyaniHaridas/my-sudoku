@@ -1,6 +1,6 @@
 import React from "react";
-import Timer from "./Timer";
-import ReactSwitch from "react-switch";
+// import Timer from "./Timer";
+// import ReactSwitch from "react-switch";
 
 
 
@@ -9,6 +9,9 @@ export default function Settings({
   difficulty,
   handleSliderChange,
   startGame,
+  minutes,
+  seconds,
+  timevalue,
   mode,
   toggleMode,
 }) {
@@ -38,8 +41,9 @@ export default function Settings({
         <button className="button-create-board" onClick={startGame} >
           Create New Board
         </button>
-        {/* {< Timer start={sudokuSolver.start.startTime} />} */}
-        {/* <label>Timer :  </label> */}
+       
+        <h2 className="timer">Timer: {minutes}:{seconds < 10 ? `0${seconds}` : seconds}</h2>
+       
         {/* <label className="switch-label">Easy Mode</label>
         <ReactSwitch
           className="switch"

@@ -31,3 +31,14 @@
 
 // }
 
+// import React, { useState } from 'react';
+
+// function Timer() {
+//   const [seconds, setSeconds] = useState(0);
+
+//   const resetTimer = () => {
+//     setSeconds(0);
+//   };
+
+// }
+//   export default Timer;
